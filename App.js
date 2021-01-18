@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { util } from "prettier";
 import CourseList from "./components/CourseList";
 
-// const Banner = ({ title }) => <Text style={styles.banner}>{title}</Text>;
 const Banner = ({ title }) => (
   <Text style={styles.banner}>{title || "[loading...]"}</Text>
 );
