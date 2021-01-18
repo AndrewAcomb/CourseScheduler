@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { getCourseTerm } from "../utils/terms";
 import Course from "./Course";
 import TermSelector from "./TermSelector";
+import CourseSelector from "./CourseSelector";
 
 const styles = StyleSheet.create({
   courseList: {
@@ -21,19 +22,13 @@ const CourseList = ({ courses }) => {
   );
 
   return (
-    <View>
+    <ScrollView>
       <TermSelector
         selectedTerm={selectedTerm}
         setSelectedTerm={setSelectedTerm}
       />
-      <ScrollView>
-        <View style={styles.courseList}>
-          {termCourses.map((course) => (
-            <Course key={course.id} course={course} />
-          ))}
-        </View>
-      </ScrollView>
-    </View>
+      <CourseSelector courses={termCourses} />
+    </ScrollView>
   );
 };
 
