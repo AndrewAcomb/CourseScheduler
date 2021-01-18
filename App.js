@@ -1,14 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { util } from "prettier";
+import CourseList from "./components/CourseList";
 
 const schedule = {
   title: "CS Courses for 2018-2019",
@@ -36,30 +30,6 @@ const schedule = {
   ],
 };
 
-const logo = {
-  title: "Course Scheduler",
-};
-
-const getCourseNumber = (course) => course.id.slice(1);
-
-const Course = ({ course }) => (
-  <TouchableOpacity style={styles.courseButton}>
-    <Text style={styles.courseText}>
-      {`CS ${getCourseNumber(course)}\n${course.meets}`}
-    </Text>
-  </TouchableOpacity>
-);
-
-const CourseList = ({ courses }) => (
-  <ScrollView>
-    <View style={styles.courseList}>
-      {courses.map((course) => (
-        <Course key={course.id} course={course} />
-      ))}
-    </View>
-  </ScrollView>
-);
-
 const Banner = ({ title }) => <Text style={styles.banner}>{title}</Text>;
 
 const App = () => {
@@ -83,29 +53,6 @@ const styles = StyleSheet.create({
     color: "#FFF8E7",
     fontSize: 48,
     fontWeight: 400,
-  },
-  courseList: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  courseButton: {
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 10,
-    height: 60,
-    padding: 10,
-    minWidth: 90,
-    maxWidth: 90,
-    backgroundColor: "#4080C0",
-  },
-  courseText: {
-    color: "#FFF8E7",
-    fontSize: 12,
-    textAlign: "center",
   },
 });
 
