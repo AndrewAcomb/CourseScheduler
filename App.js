@@ -1,24 +1,112 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { util } from "prettier";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>CourseScheduler</Text>
-      <Text style={styles.commentText}>Academia optimized.</Text>
-      <StatusBar style="auto" />
+const schedule = {
+  title: "CS Courses for 2018-2019",
+  courses: [
+    {
+      id: "F101",
+      title: "Computer Science: Concepts, Philosophy, and Connections",
+      meets: "MWF 11:00-11:50",
+    },
+    {
+      id: "F110",
+      title: "Intro Programming for non-majors",
+      meets: "MWF 10:00-10:50",
+    },
+    {
+      id: "F111",
+      title: "Fundamentals of Computer Programming I",
+      meets: "MWF 13:00-13:50",
+    },
+    {
+      id: "F211",
+      title: "Fundamentals of Computer Programming II",
+      meets: "TuTh 12:30-13:50",
+    },
+  ],
+};
+
+const logo = {
+  title: "Course Scheduler",
+};
+
+const getCourseNumber = (course) => course.id.slice(1);
+
+const Course = ({ course }) => (
+  <TouchableOpacity style={styles.courseButton}>
+    <Text style={styles.courseText}>
+      {`CS ${getCourseNumber(course)}\n${course.meets}`}
+    </Text>
+  </TouchableOpacity>
+);
+
+const CourseList = ({ courses }) => (
+  <ScrollView>
+    <View style={styles.courseList}>
+      {courses.map((course) => (
+        <Course key={course.id} course={course} />
+      ))}
     </View>
+  </ScrollView>
+);
+
+const Banner = ({ title }) => <Text style={styles.banner}>{title}</Text>;
+
+const App = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Banner title={schedule.title} />
+      <CourseList courses={schedule.courses} />
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1f1f20',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#1f1f20",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 20,
   },
-  headerText: {color: '#FFF8E7', fontSize: 128, fontWeight: 400},
-  commentText: {color: '#FFF8E7', fontSize: 64, fontWeight: 200},
+  banner: {
+    color: "#FFF8E7",
+    fontSize: 48,
+    fontWeight: 400,
+  },
+  courseList: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  courseButton: {
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    height: 60,
+    padding: 10,
+    minWidth: 90,
+    maxWidth: 90,
+    backgroundColor: "#4080C0",
+  },
+  courseText: {
+    color: "#FFF8E7",
+    fontSize: 12,
+    textAlign: "center",
+  },
 });
+
+export default App;
