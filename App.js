@@ -4,35 +4,34 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { util } from "prettier";
 import CourseList from "./components/CourseList";
 
-const schedule = {
-  title: "CS Courses for 2018-2019",
-  courses: [
-    {
-      id: "F101",
-      title: "Computer Science: Concepts, Philosophy, and Connections",
-      meets: "MWF 11:00-11:50",
-    },
-    {
-      id: "F110",
-      title: "Intro Programming for non-majors",
-      meets: "MWF 10:00-10:50",
-    },
-    {
-      id: "F111",
-      title: "Fundamentals of Computer Programming I",
-      meets: "MWF 13:00-13:50",
-    },
-    {
-      id: "F211",
-      title: "Fundamentals of Computer Programming II",
-      meets: "TuTh 12:30-13:50",
-    },
-  ],
+// const Banner = ({ title }) => <Text style={styles.banner}>{title}</Text>;
+const Banner = ({ title }) => (
+  <Text style={styles.banner}>{title || "[loading...]"}</Text>
+);
+
+const fetchSchedule = async () => {
+  const response = await fetch(url);
+  if (!response.ok) throw response;
+  const json = await response.json();
+  setSchedule(json);
 };
 
-const Banner = ({ title }) => <Text style={styles.banner}>{title}</Text>;
-
 const App = () => {
+  const [schedule, setSchedule] = useState({ title: "", courses: [] });
+  // const banner = useEffect((<Banner title={schedule.title} />), [schedule]);
+
+  const url = "https://courses.cs.northwestern.edu/394/data/cs-courses.php";
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      const response = await fetch(url);
+      if (!response.ok) throw response;
+      const json = await response.json();
+      setSchedule(json);
+    };
+    fetchSchedule();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Banner title={schedule.title} />
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
   },
   banner: {
     color: "#FFF8E7",
-    fontSize: 48,
+    fontSize: 32,
     fontWeight: 400,
   },
 });
