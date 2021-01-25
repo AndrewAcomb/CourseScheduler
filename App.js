@@ -1,57 +1,35 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
-import { util } from "prettier";
-import CourseList from "./components/CourseList";
+import "react-native-gesture-handler";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ScheduleScreen from "./screens/ScheduleScreen";
+import CourseDetailScreen from "./screens/CourseDetailScreen";
 
-const Banner = ({ title }) => (
-  <Text style={styles.banner}>{title || "[loading...]"}</Text>
-);
-
-const fetchSchedule = async () => {
-  const response = await fetch(url);
-  if (!response.ok) throw response;
-  const json = await response.json();
-  setSchedule(json);
-};
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [schedule, setSchedule] = useState({ title: "", courses: [] });
-  // const banner = useEffect((<Banner title={schedule.title} />), [schedule]);
-
-  const url = "https://courses.cs.northwestern.edu/394/data/cs-courses.php";
-
-  useEffect(() => {
-    const fetchSchedule = async () => {
-      const response = await fetch(url);
-      if (!response.ok) throw response;
-      const json = await response.json();
-      setSchedule(json);
-    };
-    fetchSchedule();
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <Banner title={schedule.title} />
-      <CourseList courses={schedule.courses} />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="ScheduleScreen"
+          component={ScheduleScreen}
+          options={{
+            title: "Schedule",
+            headerStyle: { backgroundColor: "#FFF8E7" },
+          }}
+        />
+        <Stack.Screen
+          name="CourseDetailScreen"
+          component={CourseDetailScreen}
+          options={{
+            title: "Course detail",
+            headerStyle: { backgroundColor: "#FFF8E7" },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1f1f20",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 20,
-  },
-  banner: {
-    color: "#FFF8E7",
-    fontSize: 32,
-    fontWeight: 400,
-  },
-});
 
 export default App;
