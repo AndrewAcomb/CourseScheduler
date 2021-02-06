@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { terms } from "../utils/terms";
+import color from "./Form/colors";
 
 const TermButton = ({ term, setSelectedTerm, isActive }) => (
   <TouchableOpacity
@@ -44,14 +45,14 @@ const styles = StyleSheet.create({
   },
   termButton: {
     ...termButtonBase,
-    backgroundColor: "#4f9f64",
+    backgroundColor: color.lightgreen,
   },
   termButtonActive: {
     ...termButtonBase,
-    backgroundColor: "#105f25",
+    backgroundColor: color.darkgreen,
   },
   termText: {
-    color: "#FFF8E7",
+    color: color.white,
     fontSize: 15,
   },
 });

@@ -1,5 +1,6 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import colors from "../components/Form/colors";
 
 const Field = ({ label, value }) => {
   return (
@@ -28,17 +29,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1f1f20",
+    backgroundColor: colors.black,
   },
   field: {
     height: 40,
     width: 300,
     padding: 5,
-    backgroundColor: "#FFF8E7",
+    backgroundColor: colors.white,
   },
   fieldContainer: {
     marginBottom: 20,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,

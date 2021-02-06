@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import CourseSelector from "./CourseSelector";
+import colors from "./Form/colors";
 
 const getCourseNumber = (course) => course.id.slice(1);
 
@@ -40,18 +41,18 @@ const courseBase = {
 const styles = StyleSheet.create({
   courseButton: {
     ...courseBase,
-    backgroundColor: "#4080C0",
+    backgroundColor: colors.lightblue,
   },
   courseButtonSelected: {
     ...courseBase,
-    backgroundColor: "#004A99",
+    backgroundColor: colors.darkblue,
   },
   courseButtonDisabled: {
     ...courseBase,
-    backgroundColor: "#A0A0A0",
+    backgroundColor: colors.lightgrey,
   },
   courseText: {
-    color: "#FFF8E7",
+    color: colors.white,
     fontSize: 12,
     textAlign: "center",
   },
