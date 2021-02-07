@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { getCourseTerm } from "../utils/terms";
 import Course from "./Course";
 import TermSelector from "./TermSelector";

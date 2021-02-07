@@ -3,12 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { util } from "prettier";
 import CourseList from "../components/CourseList";
-// import CourseEditScreen from "./CourseEditScreen";
 import UserContext from "../UserContext";
 import Colors from "../components/Form/colors";
 import { firebase } from "../firebase";
-
-const db = firebase.database().ref();
 
 const fixCourses = (json) => ({
   ...json,
@@ -37,6 +34,7 @@ const ScheduleScreen = ({ navigation }) => {
   const [schedule, setSchedule] = useState({ title: "", courses: [] });
 
   const view = (course) => {
+    console.log(user);
     navigation.navigate(canEdit ? "CourseEditScreen" : "CourseDetailScreen", {
       course,
     });

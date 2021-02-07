@@ -5,15 +5,6 @@ import Form from "../components/Form";
 import color from "../components/Form/colors";
 import * as Yup from "yup";
 
-const Field = ({ label, value }) => {
-  return (
-    <View style={styles.fieldContainer}>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.field}>{value}</Text>
-    </View>
-  );
-};
-
 const validationSchema = Yup.object().shape({
   id: Yup.string()
     .required()
@@ -29,7 +20,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required().label("Title"),
 });
 
-const CourseEditScreen = ({ navigation, route }) => {
+const CourseEditScreen = ({ route }) => {
   const course = route.params.course;
   const [submitError, setSubmitError] = useState("");
 
