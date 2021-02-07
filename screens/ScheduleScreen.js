@@ -3,9 +3,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { util } from "prettier";
 import CourseList from "../components/CourseList";
-import CourseEditScreen from "./CourseEditScreen";
+// import CourseEditScreen from "./CourseEditScreen";
 import UserContext from "../UserContext";
 import Colors from "../components/Form/colors";
+import { firebase } from "../firebase";
+
+const db = firebase.database().ref();
+
+const fixCourses = (json) => ({
+  ...json,
+  courses: Object.values(json.courses),
+});
 
 const Banner = ({ title }) => (
   <Text style={styles.banner}>{title || "[loading...]"}</Text>
@@ -14,6 +22,18 @@ const Banner = ({ title }) => (
 const ScheduleScreen = ({ navigation }) => {
   const user = useContext(UserContext);
   const canEdit = user && user.role === "admin";
+
+  useEffect(() => {
+    const db = firebase.database().ref();
+    const handleData = (snap) => {
+      if (snap.val()) setSchedule(fixCourses(snap.val()));
+    };
+    db.on("value", handleData, (error) => alert(error));
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []);
+
   const [schedule, setSchedule] = useState({ title: "", courses: [] });
 
   const view = (course) => {
@@ -21,18 +41,6 @@ const ScheduleScreen = ({ navigation }) => {
       course,
     });
   };
-
-  const url = "https://courses.cs.northwestern.edu/394/data/cs-courses.php";
-
-  useEffect(() => {
-    const fetchSchedule = async () => {
-      const response = await fetch(url);
-      if (!response.ok) throw response;
-      const json = await response.json();
-      setSchedule(json);
-    };
-    fetchSchedule();
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
